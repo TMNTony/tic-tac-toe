@@ -1,11 +1,9 @@
-function changeText(){
-    document.querySelector("button").innerHTML = "X"
-}
-
-
-
 document.addEventListener('DOMContentLoaded', ()=>{
-    document.querySelector("button").addEventListener('click', function(e){
-        changeText()
-    });
-});
+
+const btn = document.querySelectorAll("button");
+
+ btn.forEach(button => {
+    button.addEventListener('click', () => {
+    button.innerHTML = "X"
+    })})
+})
