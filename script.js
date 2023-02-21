@@ -1,17 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
-  let gameBoard = ["", "", "", "", "", "", "", "", ""];
+  const gameBoard = ["", "", "", "", "", "", "", "", ""];
   const btn = document.querySelectorAll("button");
   let currentPlayer = "X";
   let winnerDeclared = false;
-  const player1 = document.getElementById("player1Name");
-  const player2 = document.getElementById("player2Name");
   const reset = document.getElementById("reset");
+  const input1 = document.getElementById("player1Name");
+  const input2 = document.getElementById("player2Name");
 
   reset.addEventListener("click", (event) => {
-    gameBoard = ["", "", "", "", "", "", "", "", ""];
+    location.reload();
   });
 
   function handleClick(event) {
+    const player1 = input1.value;
+    const player2 = input2.value;
+
     if (winnerDeclared) {
       return;
     }
@@ -25,11 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
     gameBoard[index] = currentPlayer;
     currentPlayer = currentPlayer === "X" ? "O" : "X";
 
-    player1.classList.toggle("active");
-    player2.classList.toggle("active");
+    input1.classList.toggle("active");
+    input2.classList.toggle("active");
   }
 
   function declareWinner(player) {
+    const player1 = input1.value;
+    const player2 = input2.value;
+
     const patterns = [
       [0, 1, 2],
       [3, 4, 5],
@@ -46,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return gameBoard[a] === player && gameBoard[b] === player && gameBoard[c] === player;
     });
 
-    return winnerPattern ? `${player} win!` : null;
+    return winnerPattern ? `${player === "X" ? player1 : player2} wins!` : null;
   }
 
   btn.forEach((button) => {
@@ -61,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const isTie = gameBoard.every((cell) => cell !== "") && !winner;
       if (winner || isTie) {
         winnerDeclared = true;
-        console.log(winner || "It's a tie!");
+        alert(winner || "It's a tie!");
         btn.forEach((button) => button.removeEventListener("click", handleClick));
       }
     });
